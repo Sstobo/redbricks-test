@@ -16,12 +16,14 @@ import { useEffect } from 'react';
 
 export default function Header() {
   const { toast } = useToast();
-  const { formSubmissionList, setFormSubmissionList } = useStore();
-
 
   const handleLikedSubmissionClick = async (formData) => {
+    const finalFormData = {
+      ...formData,
+      liked: true,
+    };
     try {
-      await saveLikedFormSubmission(formData);
+      await saveLikedFormSubmission(finalFormData);
       toast({
         title: 'Liked Submission!',
         description: 'This has been saved in local storage.',
