@@ -10,9 +10,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useToast } from "@/components/ui/use-toast"
 import { ThumbsUp } from "lucide-react"
 import { createMockFormSubmission, saveLikedFormSubmission, onMessage } from './service/mockServer';
-import { useStore } from './store/store';
-import { useEffect } from 'react';
-
 
 export default function Header() {
   const { toast } = useToast();
@@ -20,7 +17,10 @@ export default function Header() {
   const handleLikedSubmissionClick = async (formData) => {
     const finalFormData = {
       ...formData,
-      liked: true,
+      data: {
+        ...formData.data,
+        liked: true,
+      },
     };
     try {
       await saveLikedFormSubmission(finalFormData);
@@ -46,7 +46,7 @@ export default function Header() {
         toast({
           title: `Email from: ${formData.data.email}`,
           description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
-          primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp /></Button>,
+          primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp className="w-4 h-4" /></Button>,
         });
       });
     } catch (error) {
@@ -58,10 +58,6 @@ export default function Header() {
       console.error('Error creating new submission:', error);
     }
   };
-
-
-  console.log(localStorage.getItem('formSubmissions'));
-
 
   return (
     <Box sx={{flexGrow: 1}}>
