@@ -9,8 +9,6 @@ import { Delete } from "lucide-react";
 export default function Content() {
   const { toast } = useToast();
 
-
-
   
   const handleDeleteSubmission = (submission) => {
     const updatedSubmissions = formSubmissions.filter(
@@ -24,9 +22,7 @@ export default function Content() {
   };
 
   // get form submissions from local storage
-  const formSubmissions =
-    JSON.parse(localStorage.getItem("formSubmissions")) || [];
-  console.log(formSubmissions);
+  const formSubmissions =  JSON.parse(localStorage.getItem("formSubmissions")) || [];
 
   return (
     <Box sx={{ marginTop: 3 }}>
