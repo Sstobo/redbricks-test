@@ -68,8 +68,6 @@ export default function Header() {
     }
   };
 
-  console.log(isLoading); 
-
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
