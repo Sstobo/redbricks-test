@@ -4,9 +4,12 @@ import Typography from '@mui/material/Typography';
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { ArrowUp } from "lucide-react"
+import { useStore } from './store/store';
+
 
 export default function Content() {
   const { toast } = useToast();
+  const { formSubmissionList, setFormSubmissionList } = useStore();
 
   const handleClick = () => {
     toast({
@@ -20,7 +23,7 @@ export default function Content() {
       <Typography variant="h4">Liked Form Submissions</Typography>
     
       <Typography variant="body1" sx={{fontStyle: 'italic', marginTop: 1}}>
-      {/* we will show the submissions here */}
+     
       </Typography>
     </Box>
   );

@@ -9,34 +9,37 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useToast } from "@/components/ui/use-toast"
 import { ThumbsUp } from "lucide-react"
-import { createMockFormSubmission,saveLikedFormSubmission,onMessage } from './service/mockServer';
+import { createMockFormSubmission, saveLikedFormSubmission, onMessage } from './service/mockServer';
 import { useStore } from './store/store';
+import { useEffect } from 'react';
+
 
 export default function Header() {
   const { toast } = useToast();
   const { formSubmissionList, setFormSubmissionList } = useStore();
 
 
-
+  const handleLikedSubmissionClick = (formData) => {
+    saveLikedFormSubmission(formData);
+    toast({
+      title: 'Liked Submission! ',
+      description: 'This will be saved in local storage.',
+    });
+  }
 
   const handleNewSubmissionClick = () => {
-   
     createMockFormSubmission();
     onMessage((formData) => {
       toast({
         title: `Email from: ${formData.data.email}`,
         description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
-        primaryAction: <Button size="icon" variant="success" onClick={() => saveLikedFormSubmission(submission)}><ThumbsUp /></Button>,
+        primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp /></Button>,
        });
-      //  save this in local storage
-      // create a new submission object
-      const submissionItemForLocalStorage = {
-        id: formData.id,
-        data: formData.data
-      }
-      localStorage.setItem('formSubmissions', JSON.stringify(submission));
     });
   };
+
+
+  console.log(localStorage.getItem('formSubmissions'));
 
 
   return (
