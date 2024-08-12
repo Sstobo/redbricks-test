@@ -19,23 +19,42 @@ export default function Header() {
   const { formSubmissionList, setFormSubmissionList } = useStore();
 
 
-  const handleLikedSubmissionClick = (formData) => {
-    saveLikedFormSubmission(formData);
-    toast({
-      title: 'Liked Submission! ',
-      description: 'This will be saved in local storage.',
-    });
+  const handleLikedSubmissionClick = async (formData) => {
+    try {
+      await saveLikedFormSubmission(formData);
+      toast({
+        title: 'Liked Submission!',
+        description: 'This has been saved in local storage.',
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Sorry, our server is VERY old and sometimes fails.',
+        description: 'Failed to save the liked submission. Please try again.',
+        variant: 'destructive',
+      });
+      console.error('Error saving liked submission:', error);
+    }
   }
 
   const handleNewSubmissionClick = () => {
-    createMockFormSubmission();
-    onMessage((formData) => {
+    try {
+      createMockFormSubmission();
+      onMessage((formData) => {
+        toast({
+          title: `Email from: ${formData.data.email}`,
+          description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
+          primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp /></Button>,
+        });
+      });
+    } catch (error) {
       toast({
-        title: `Email from: ${formData.data.email}`,
-        description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
-        primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp /></Button>,
-       });
-    });
+        title: 'Error',
+        description: 'Failed to create a new submission. Please try again.',
+        variant: 'destructive',
+      });
+      console.error('Error creating new submission:', error);
+    }
   };
 
 
