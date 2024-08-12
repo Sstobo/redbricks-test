@@ -8,12 +8,14 @@ import {Button} from '@/components/ui/button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useToast } from "@/components/ui/use-toast"
-import { ThumbsUp, Trash2 } from "lucide-react"
+import { ThumbsUp } from "lucide-react"
 import { createMockFormSubmission,saveLikedFormSubmission,onMessage } from './service/mockServer';
-
+import { useStore } from './store/store';
 
 export default function Header() {
   const { toast } = useToast();
+  const { formSubmissionList, setFormSubmissionList } = useStore();
+
 
 
 
@@ -27,6 +29,12 @@ export default function Header() {
         primaryAction: <Button size="icon" variant="success" onClick={() => saveLikedFormSubmission(submission)}><ThumbsUp /></Button>,
        });
       //  save this in local storage
+      // create a new submission object
+      const submissionItemForLocalStorage = {
+        id: formData.id,
+        data: formData.data
+      }
+      localStorage.setItem('formSubmissions', JSON.stringify(submission));
     });
   };
 
