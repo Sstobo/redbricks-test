@@ -77,8 +77,8 @@ export default function Header() {
             Toast Exercise
           </Typography>
           <Button
-            variant="contained"
-            size="small"
+            variant="default"
+          
             color="secondary"
             onClick={() => handleNewSubmissionClick()}
           >

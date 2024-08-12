@@ -59,7 +59,7 @@ export async function saveLikedFormSubmission(formSubmission) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // We have a really flakey server that has issues
-      if (randomPercent() < 99) {
+      if (randomPercent() < 10) {
         reject({ status: 500, message: 'server error' });
         return;
       }
