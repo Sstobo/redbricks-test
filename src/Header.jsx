@@ -4,13 +4,28 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {Button} from '@/components/ui/button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import { useToast } from "@/components/ui/use-toast"
+import { ThumbsUp, Trash2 } from "lucide-react"
 import { createMockFormSubmission } from './service/mockServer';
+import { saveLikedFormSubmission } from './service/mockServer';
 
 export default function Header() {
+  const { toast } = useToast();
+
+  const handleNewSubmissionClick = () => {
+    const submission = createMockFormSubmission();
+    console.log(submission);
+    toast({
+      title: "Scheduled: Catch up",
+      description: "Friday, February 12, 2021 at 5:57 PM",
+      primaryAction: <Button size="icon" variant="success" onClick={() => saveLikedFormSubmission(submission)}><ThumbsUp /></Button>,
+     });
+  };
+
+
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
@@ -30,7 +45,7 @@ export default function Header() {
             variant="contained"
             size="small"
             color="secondary"
-            onClick={() => createMockFormSubmission()}
+            onClick={() => handleNewSubmissionClick()}
           >
             New Submission
           </Button>

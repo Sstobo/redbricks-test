@@ -34,12 +34,29 @@ const toastVariants = cva(
   }
 )
 
-const Toast = React.forwardRef(({ className, variant, ...props }, ref) => {
+const Toast = React.forwardRef(({ className, variant, primaryAction, ...props }, ref) => {
   return (
-    (<ToastPrimitives.Root
+    <ToastPrimitives.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
-      {...props} />)
+      {...props}
+    >
+      <div className="flex flex-col gap-2 w-full">
+
+     
+      <div className="w-full">
+        {props.children}
+      </div>
+
+      <div className="flex gap-2 w-full justify-between items-center pt-4">
+        <div>
+        {primaryAction}
+        </div>
+       
+      
+      </div>
+      </div>
+    </ToastPrimitives.Root>
   );
 })
 Toast.displayName = ToastPrimitives.Root.displayName

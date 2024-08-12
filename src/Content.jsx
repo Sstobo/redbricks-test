@@ -18,9 +18,9 @@ export default function Content() {
   return (
     <Box sx={{marginTop: 3}}>
       <Typography variant="h4">Liked Form Submissions</Typography>
-      <Button variant="outline" onClick={handleClick}><ArrowUp /> Show toast</Button>
+    
       <Typography variant="body1" sx={{fontStyle: 'italic', marginTop: 1}}>
-        TODO: List of liked submissions here (delete this line)
+      {/* we will show the submissions here */}
       </Typography>
     </Box>
   );
