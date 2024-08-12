@@ -72,7 +72,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{flexGrow: 1}}>
-            Toast Exercise
+            Toast Exercise, By Sean Stobo 2024
           </Typography>
           <Button
             variant="default"

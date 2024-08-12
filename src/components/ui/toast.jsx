@@ -48,7 +48,7 @@ const Toast = React.forwardRef(({ className, variant, primaryAction, ...props },
         {props.children}
       </div>
 
-      <div className="flex gap-2 w-full justify-between items-center pt-4">
+      <div className="flex gap-2 w-full justify-between items-center">
         <div>
         {primaryAction}
         </div>

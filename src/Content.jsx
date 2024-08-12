@@ -1,14 +1,16 @@
 import React from "react";
+import { useState, useRef, useEffect } from 'react'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Delete } from "lucide-react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Content() {
   const { toast } = useToast();
-
+  const [parent, enableAnimations] = useAutoAnimate();
   
   const handleDeleteSubmission = (submission) => {
     const updatedSubmissions = formSubmissions.filter(
@@ -21,7 +23,6 @@ export default function Content() {
     });
   };
 
-  // get form submissions from local storage
   const formSubmissions =  JSON.parse(localStorage.getItem("formSubmissions")) || [];
 
   return (
@@ -29,11 +30,11 @@ export default function Content() {
       <Typography variant="h4">Liked Form Submissions</Typography>
 
       {formSubmissions && (
-        <div className="flex flex-col gap-4 mt-4">
+        <div ref={parent} className="grid grid-cols-3 gap-4 mt-10">
           {formSubmissions.map((submission, index) => (
             <Card
               key={index}
-              className="max-w-[300px] p-6 flex flex-col gap-2 relative"
+              className="p-6 flex flex-col gap-2 relative"
             >
               <Button
                 className="absolute top-4 right-4"
