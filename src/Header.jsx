@@ -15,17 +15,19 @@ import { createMockFormSubmission,saveLikedFormSubmission,onMessage } from './se
 export default function Header() {
   const { toast } = useToast();
 
+
+
   const handleNewSubmissionClick = () => {
-    const submission = createMockFormSubmission();
+   
+    createMockFormSubmission();
     onMessage((formData) => {
-      console.log(formData);
+      toast({
+        title: `Email from: ${formData.data.email}`,
+        description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
+        primaryAction: <Button size="icon" variant="success" onClick={() => saveLikedFormSubmission(submission)}><ThumbsUp /></Button>,
+       });
+      //  save this in local storage
     });
-    console.log(submission);
-    toast({
-      title: "Scheduled: Catch up",
-      description: "Friday, February 12, 2021 at 5:57 PM",
-      primaryAction: <Button size="icon" variant="success" onClick={() => saveLikedFormSubmission(submission)}><ThumbsUp /></Button>,
-     });
   };
 
 
