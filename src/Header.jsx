@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,8 +13,10 @@ import { createMockFormSubmission, saveLikedFormSubmission, onMessage } from './
 
 export default function Header() {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLikedSubmissionClick = async (formData) => {
+    setIsLoading(true);
     const finalFormData = {
       ...formData,
       data: {
@@ -28,6 +30,7 @@ export default function Header() {
         title: 'Liked Submission!',
         description: 'This has been saved in local storage.',
       });
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       toast({
@@ -35,20 +38,25 @@ export default function Header() {
         description: 'Failed to save the liked submission. Please try again.',
         variant: 'destructive',
       });
+      setIsLoading(false);
       console.error('Error saving liked submission:', error);
+      
     }
+   
   }
 
   const handleNewSubmissionClick = () => {
+    setIsLoading(true);
     try {
       createMockFormSubmission();
       onMessage((formData) => {
         toast({
           title: `Email from: ${formData.data.email}`,
           description: `Written by: ${formData.data.firstName} ${formData.data.lastName}.`,
-          primaryAction: <Button size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp className="w-4 h-4" /></Button>,
+          primaryAction: <Button disabled={isLoading} size="icon" variant="success" onClick={() => handleLikedSubmissionClick(formData)}><ThumbsUp className="w-4 h-4" /></Button>,
         });
       });
+      setIsLoading(false);
     } catch (error) {
       toast({
         title: 'Error',
@@ -56,8 +64,11 @@ export default function Header() {
         variant: 'destructive',
       });
       console.error('Error creating new submission:', error);
+      setIsLoading(false);
     }
   };
+
+  console.log(isLoading); 
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -76,11 +87,16 @@ export default function Header() {
           </Typography>
           <Button
             variant="default"
-          
+            disabled={isLoading}
             color="secondary"
-            onClick={() => handleNewSubmissionClick()}
+            onClick={() => {
+              setIsLoading(true);
+              handleNewSubmissionClick();
+            }}
           >
-            New Submission
+          
+            {isLoading ? 'Loading...' : 'New Submission'}
+
           </Button>
         </Toolbar>
       </AppBar>
