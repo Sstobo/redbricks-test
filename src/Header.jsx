@@ -9,14 +9,17 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useToast } from "@/components/ui/use-toast"
 import { ThumbsUp, Trash2 } from "lucide-react"
-import { createMockFormSubmission } from './service/mockServer';
-import { saveLikedFormSubmission } from './service/mockServer';
+import { createMockFormSubmission,saveLikedFormSubmission,onMessage } from './service/mockServer';
+
 
 export default function Header() {
   const { toast } = useToast();
 
   const handleNewSubmissionClick = () => {
     const submission = createMockFormSubmission();
+    onMessage((formData) => {
+      console.log(formData);
+    });
     console.log(submission);
     toast({
       title: "Scheduled: Catch up",
